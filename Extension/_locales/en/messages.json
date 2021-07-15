@@ -440,17 +440,11 @@
     "filtering_log_search_string": {
         "message": "Enter the search string"
     },
-    "filtering_log_preserve_log": {
-        "message": "Preserve log"
-    },
     "filtering_log_preserve_log_off": {
         "message": "Preserve log: OFF"
     },
     "filtering_log_preserve_log_on": {
         "message": "Preserve log: ON"
-    },
-    "filtering_refresh_tab": {
-        "message": "Refresh page"
     },
     "filtering_refresh_tab_short": {
         "message": "Refresh"
@@ -554,9 +548,6 @@
     "filtering_modal_apply_domains": {
         "message": "Apply the rule to all websites"
     },
-    "filtering_modal_match_case": {
-        "message": "Enable case-sensitivity"
-    },
     "filtering_modal_third_party": {
         "message": "Apply to third-party requests only"
     },
@@ -581,9 +572,6 @@
     "filtering_modal_copied": {
         "message": "Copied"
     },
-    "filtering_log_filter_title": {
-        "message": "Filter"
-    },
     "filtering_log_filter_processed": {
         "message": "Processed"
     },
@@ -601,12 +589,6 @@
     },
     "filtering_log_filter_user_rule": {
         "message": "User filter"
-    },
-    "filtering_log_filter_first_party": {
-        "message": "First party"
-    },
-    "filtering_log_filter_third_party": {
-        "message": "Third party"
     },
     "options_settings": {
         "message": "AdGuard Settings"
@@ -863,9 +845,6 @@
     "options_delete_filter_confirm": {
         "message": "Are you sure you want to delete this filter?"
     },
-    "filtering_type_content_type": {
-        "message": "Content type"
-    },
     "options_nav_better_than_extension": {
         "message": "Why is AdGuard full-fledged program better than extension?"
     },
@@ -913,9 +892,6 @@
     },
     "options_user_rules_editor_stub_go_to_editor_button": {
         "message": "Go to editor"
-    },
-    "options_user_rules_editor_close_confirm": {
-        "message": "There are unsaved changes, are you sure?"
     },
     "options_editor_open_fullscreen_button_tooltip": {
         "message": "Open editor in fullscreen mode"
