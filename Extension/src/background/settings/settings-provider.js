@@ -113,6 +113,7 @@ export const settingsProvider = (function () {
      */
     const loadStealthModeSection = () => {
         const enabledFilterIds = collectEnabledFilterIds();
+        const blockKnownTrackers = enabledFilterIds.indexOf(utils.filters.ids.TRACKING_FILTER_ID) >= 0;
         const stripTrackingParameters = enabledFilterIds.indexOf(utils.filters.ids.URL_TRACKING_FILTER_ID) >= 0;
 
         const section = {
@@ -126,6 +127,7 @@ export const settingsProvider = (function () {
                 'stealth-block-third-party-cookies-time': settings.getSelfDestructThirdPartyCookiesTime(),
                 'stealth-block-first-party-cookies': settings.getSelfDestructFirstPartyCookies(),
                 'stealth-block-first-party-cookies-time': settings.getSelfDestructFirstPartyCookiesTime(),
+                'block-known-trackers': blockKnownTrackers,
                 'strip-tracking-parameters': stripTrackingParameters,
             },
         };
@@ -227,6 +229,12 @@ export const settingsProvider = (function () {
         settings.setSelfDestructThirdPartyCookiesTime(set['stealth-block-third-party-cookies-time']);
         settings.setSelfDestructFirstPartyCookies(!!set['stealth-block-first-party-cookies']);
         settings.setSelfDestructFirstPartyCookiesTime(set['stealth-block-first-party-cookies-time']);
+
+        if (set['block-known-trackers']) {
+            await application.addAndEnableFilters([utils.filters.ids.TRACKING_FILTER_ID]);
+        } else {
+            application.disableFilters([utils.filters.ids.TRACKING_FILTER_ID]);
+        }
 
         if (set['strip-tracking-parameters']) {
             await application.addAndEnableFilters([utils.filters.ids.URL_TRACKING_FILTER_ID]);

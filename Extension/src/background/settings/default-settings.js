@@ -53,6 +53,7 @@ export const defaultSettings = {
         'stealth-block-first-party-cookies': settings.defaultProperties[settings.SELF_DESTRUCT_FIRST_PARTY_COOKIES],
         'stealth-block-first-party-cookies-time':
             settings.defaultProperties[settings.SELF_DESTRUCT_FIRST_PARTY_COOKIES_TIME],
+        'block-known-trackers': false,
         'strip-tracking-parameters': false,
     },
 };

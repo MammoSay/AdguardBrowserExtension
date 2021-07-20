@@ -57,6 +57,8 @@ class SettingsStore {
 
     @observable allowAcceptableAds = null;
 
+    @observable blockKnownTrackers = null;
+
     @observable stripTrackingParameters = null;
 
     @observable allowlist = '';
@@ -118,6 +120,7 @@ class SettingsStore {
             this.version = data.appVersion;
             this.constants = data.constants;
             this.setAllowAcceptableAds(data.filtersMetadata.filters);
+            this.setBlockKnownTrackers(data.filtersMetadata.filters);
             this.setStripTrackingParameters(data.filtersMetadata.filters);
             this.isChrome = data.environmentOptions.isChrome;
             this.optionsReadyToRender = true;
@@ -193,11 +196,44 @@ class SettingsStore {
     }
 
     @action
+    setBlockKnownTrackers(filters) {
+        const { TRACKING_FILTER_ID } = this.constants.AntiBannerFiltersId;
+        const filterObject = filters
+            .find((f) => f.filterId === TRACKING_FILTER_ID);
+        this.blockKnownTrackers = !!(filterObject.enabled);
+    }
+
+    @action
     setStripTrackingParameters(filters) {
         const { URL_TRACKING_FILTER_ID } = this.constants.AntiBannerFiltersId;
         const filterObject = filters
             .find((f) => f.filterId === URL_TRACKING_FILTER_ID);
         this.stripTrackingParameters = !!(filterObject.enabled);
+    }
+
+    @action
+    async setBlockKnownTrackersState(enabled) {
+        const { TRACKING_FILTER_ID } = this.constants.AntiBannerFiltersId;
+        const prevValue = this.blockKnownTrackers;
+        this.blockKnownTrackers = enabled;
+        try {
+            const blockKnownTrackersFilter = this.filters
+                .find((f) => f.filterId === TRACKING_FILTER_ID);
+
+            if (enabled) {
+                await messenger.enableFilter(TRACKING_FILTER_ID);
+                await this.updateGroupSetting(blockKnownTrackersFilter.groupId, enabled);
+            } else {
+                await messenger.disableFilter(TRACKING_FILTER_ID);
+            }
+
+            blockKnownTrackersFilter.enabled = enabled;
+            this.refreshFilter(blockKnownTrackersFilter);
+        } catch (e) {
+            runInAction(() => {
+                this.blockKnownTrackers = prevValue;
+            });
+        }
     }
 
     @action
@@ -225,6 +261,13 @@ class SettingsStore {
         }
     }
 
+    isBlockKnownTrackersFilterEnabled() {
+        const { TRACKING_FILTER_ID } = this.constants.AntiBannerFiltersId;
+        const filterObject = this.filters
+            .find((f) => f.filterId === TRACKING_FILTER_ID);
+        return filterObject.enabled;
+    }
+
     isStripTrackingParametersFilterEnabled() {
         const { URL_TRACKING_FILTER_ID } = this.constants.AntiBannerFiltersId;
         const filterObject = this.filters
@@ -245,9 +288,13 @@ class SettingsStore {
             if (groupId === ANTIBANNER_GROUPS_ID.OTHER_FILTERS_GROUP_ID
                 && this.isAllowAcceptableAdsFilterEnabled()) {
                 this.allowAcceptableAds = enabled;
-            } else if (groupId === ANTIBANNER_GROUPS_ID.PRIVACY_FILTERS_GROUP_ID
-                && this.isStripTrackingParametersFilterEnabled()) {
-                this.stripTrackingParameters = enabled;
+            } else if (groupId === ANTIBANNER_GROUPS_ID.PRIVACY_FILTERS_GROUP_ID) {
+                if (this.isBlockKnownTrackersFilterEnabled()) {
+                    this.blockKnownTrackers = enabled;
+                }
+                if (this.isStripTrackingParametersFilterEnabled()) {
+                    this.stripTrackingParameters = enabled;
+                }
             }
             this.categories.forEach((group) => {
                 if (group.groupId === groupId) {
@@ -311,6 +358,8 @@ class SettingsStore {
             // update allow acceptable ads setting
             if (filterId === this.constants.AntiBannerFiltersId.SEARCH_AND_SELF_PROMO_FILTER_ID) {
                 this.allowAcceptableAds = enabled;
+            } else if (filterId === this.constants.AntiBannerFiltersId.TRACKING_FILTER_ID) {
+                this.blockKnownTrackers = enabled;
             } else if (filterId === this.constants.AntiBannerFiltersId.URL_TRACKING_FILTER_ID) {
                 this.stripTrackingParameters = enabled;
             }

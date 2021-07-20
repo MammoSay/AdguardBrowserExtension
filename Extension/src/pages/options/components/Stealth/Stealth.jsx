@@ -14,15 +14,20 @@ import {
     DEFAULT_THIRD_PARTY_COOKIES_SELF_DESTRUCT_MIN,
 } from '../../../constants';
 
+const BLOCK_KNOWN_TRACKERS = 'blockKnownTrackers';
 const STRIP_TRACKING_PARAMETERS = 'stripTrackingParameters';
 
 const Stealth = observer(() => {
     const { settingsStore } = useContext(rootStore);
-    const { settings, stripTrackingParameters } = settingsStore;
+    const { settings, blockKnownTrackers, stripTrackingParameters } = settingsStore;
 
     if (!settings) {
         return null;
     }
+
+    const blockKnownTrackersChangeHandler = async ({ data }) => {
+        await settingsStore.setBlockKnownTrackersState(data);
+    };
 
     const stripTrackingParametersChangeHandler = async ({ data }) => {
         await settingsStore.setStripTrackingParametersState(data);
@@ -72,6 +77,27 @@ const Stealth = observer(() => {
                 subTitle
                 disabled={isStealthModeDisabled}
             >
+                <SettingsSetCheckbox
+                    title={reactTranslator.getMessage('options_block_known_trackers_title')}
+                    description={reactTranslator.getMessage('options_block_known_trackers_description')}
+                    disabled={!blockKnownTrackers}
+                    id={BLOCK_KNOWN_TRACKERS}
+                    type={SETTINGS_TYPES.CHECKBOX}
+                    label={reactTranslator.getMessage('options_block_known_trackers_title')}
+                    value={blockKnownTrackers}
+                    handler={blockKnownTrackersChangeHandler}
+                />
+
+                <SettingsSetCheckbox
+                    title={reactTranslator.getMessage('options_strip_tracking_params_title')}
+                    description={reactTranslator.getMessage('options_strip_tracking_params_description')}
+                    disabled={!stripTrackingParameters}
+                    id={STRIP_TRACKING_PARAMETERS}
+                    type={SETTINGS_TYPES.CHECKBOX}
+                    label={reactTranslator.getMessage('options_strip_tracking_params_title')}
+                    value={stripTrackingParameters}
+                    handler={stripTrackingParametersChangeHandler}
+                />
                 <SettingsSetCheckbox
                     title={reactTranslator.getMessage('options_hide_search_queries_title')}
                     description={reactTranslator.getMessage('options_hide_search_queries_desc')}
@@ -199,17 +225,6 @@ const Stealth = observer(() => {
                     label={reactTranslator.getMessage('options_disable_webrtc_title')}
                     value={settings.values[BLOCK_WEBRTC]}
                     handler={settingChangeHandler}
-                />
-
-                <SettingsSetCheckbox
-                    title={reactTranslator.getMessage('options_strip_tracking_params_title')}
-                    description={reactTranslator.getMessage('options_strip_tracking_params_description')}
-                    disabled={!stripTrackingParameters}
-                    id={STRIP_TRACKING_PARAMETERS}
-                    type={SETTINGS_TYPES.CHECKBOX}
-                    label={reactTranslator.getMessage('options_strip_tracking_params_title')}
-                    value={stripTrackingParameters}
-                    handler={stripTrackingParametersChangeHandler}
                 />
             </SettingsSection>
         </>
