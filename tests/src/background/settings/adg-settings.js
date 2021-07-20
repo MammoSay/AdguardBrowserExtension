@@ -42,6 +42,7 @@ export const adgSettings = JSON.stringify({
         'stealth-block-third-party-cookies-time': 2880,
         'stealth-block-first-party-cookies': false,
         'stealth-block-first-party-cookies-time': 4320,
+        'block-known-trackers': true,
         'strip-tracking-parameters': true,
         // eslint-disable-next-line max-len
         'tracking-parameters': 'utm_source,utm_medium,utm_term,utm_campaign,utm_content,utm_name,utm_cid,utm_reader,utm_viz_id,utm_pubreferrer,utm_swu,utm_referrer,utm_social,utm_social-type,utm_place,utm_userid,utm_channel,fb_action_ids,fb_action_types,fb_ref,fb_source',
