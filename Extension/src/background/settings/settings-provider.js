@@ -230,12 +230,6 @@ export const settingsProvider = (function () {
         settings.setSelfDestructFirstPartyCookies(!!set['stealth-block-first-party-cookies']);
         settings.setSelfDestructFirstPartyCookiesTime(set['stealth-block-first-party-cookies-time']);
 
-        if (set['block-known-trackers']) {
-            await application.addAndEnableFilters([utils.filters.ids.TRACKING_FILTER_ID]);
-        } else {
-            application.disableFilters([utils.filters.ids.TRACKING_FILTER_ID]);
-        }
-
         if (set['strip-tracking-parameters']) {
             await application.addAndEnableFilters([utils.filters.ids.URL_TRACKING_FILTER_ID]);
         } else {

@@ -178,7 +178,6 @@
         "stealth-block-webrtc",
         "stealth-block-third-party-cookies",
         "stealth-block-first-party-cookies",
-        "block-known-trackers",
         "strip-tracking-parameters"
       ]
     }
