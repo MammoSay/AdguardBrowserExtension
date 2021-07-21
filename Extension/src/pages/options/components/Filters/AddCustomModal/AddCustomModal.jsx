@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
@@ -103,6 +104,7 @@ const AddCustomModal = ({
         >
             <form className="modal__content" onSubmit={handleSendUrlToCheck}>
                 <input
+                    autoFocus
                     type="text"
                     placeholder={reactTranslator.getMessage('options_popup_url_placeholder')}
                     onChange={handleInputChange}
