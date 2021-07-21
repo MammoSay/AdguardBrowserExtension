@@ -68,7 +68,7 @@ const Filter = observer(({ filter }) => {
     const tags = trusted
         ? [...tagsDetails, {
             tagId: 'trusted',
-            keyword: reactTranslator.getMessage('options_filters_filter_trusted_tag'),
+            keyword: 'trusted',
             description: reactTranslator.getMessage('options_filters_filter_trusted_tag_desc'),
         }]
         : [...tagsDetails];
