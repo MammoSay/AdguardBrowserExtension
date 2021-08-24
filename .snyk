@@ -1,0 +1,20 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.21.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - web-ext > addons-linter > snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2021-08-24T07:52:45.129Z'
+  'npm:lodash:20180130':
+    - gulp-hash-creator > lodash:
+        patched: '2021-08-24T07:52:45.129Z'
+  'npm:minimatch:20160620':
+    - gulp-modify-file > gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2021-08-24T07:52:45.129Z'
+    - gulp-modify-file > gulp > vinyl-fs > glob-stream > glob > minimatch:
+        patched: '2021-08-24T07:52:45.129Z'
+    - gulp-modify-file > gulp > vinyl-fs > glob-watcher > gaze > globule > minimatch:
+        patched: '2021-08-24T07:52:45.129Z'
+    - gulp-modify-file > gulp > vinyl-fs > glob-watcher > gaze > globule > glob > minimatch:
+        patched: '2021-08-24T07:52:45.129Z'
