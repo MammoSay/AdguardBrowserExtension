@@ -62,6 +62,6 @@
     "punycode": "^2.1.0",
     "qunit": "^2.6.0",
     "scriptlets": "https://github.com/AdguardTeam/Scriptlets.git#v1.3.18",
-    "web-ext": "^2.6.0"
+    "web-ext": "^3.1.1"
   }
 }
